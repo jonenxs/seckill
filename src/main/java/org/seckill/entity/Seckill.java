@@ -6,16 +6,22 @@ public class Seckill {
 
     private long seckillId;
 
+    private String name;
+
     private int number;
 
     private Date startTime;
 
+    private Date endTime;
+
     private Date createTime;
 
-    public Seckill(long seckillId, int number, Date startTime, Date createTime) {
+    public Seckill(long seckillId, String name, Integer number, Date startTime, Date endTime, Date createTime) {
         this.seckillId = seckillId;
+        this.name = name;
         this.number = number;
         this.startTime = startTime;
+        this.endTime = endTime;
         this.createTime = createTime;
     }
 
@@ -23,10 +29,20 @@ public class Seckill {
     public String toString() {
         return "Seckill{" +
                 "seckillId=" + seckillId +
+                ", name='" + name + '\'' +
                 ", number=" + number +
                 ", startTime=" + startTime +
+                ", endTime=" + endTime +
                 ", createTime=" + createTime +
                 '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getSeckillId() {
@@ -53,11 +69,22 @@ public class Seckill {
         this.startTime = startTime;
     }
 
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Seckill() {
     }
 }

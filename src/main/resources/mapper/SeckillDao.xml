@@ -11,19 +11,19 @@
         SET
           number = number - 1
         WHERE seckill_id = #{seckillId}
-        AND stsrt_time <![CDATA[ <= ]]>  #{killTime}
+        AND start_time <![CDATA[ <= ]]>  #{killTime}
         AND end_time <![CDATA[ >= ]]> #{killTime}
         AND number > 0;
     </update>
 
     <select id="queryById" resultType="Seckill" parameterType="long">
-        SELECT seckill_id,name,number,start_time,end_time.create_time
+        SELECT seckill_id,name,number,start_time,end_time,create_time
         FROM seckill
         WHERE seckill_id = #{seckillId}
     </select>
 
     <select id="queryAll" resultType="Seckill">
-        SELECT seckill_id,name,number,start_time,end_time.create_time
+        SELECT seckill_id,name,number,start_time,end_time,create_time
         FROM seckill
         ORDER BY create_time DESC
         LIMIT #{offset},#{limit}
