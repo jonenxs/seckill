@@ -41,14 +41,17 @@ public class SeckillServiceImpl implements SeckillService {
      */
     private final String slat = "sfdfdfhgjfhgfsjhgjjkubab84853#$#2sdf";
 
+    @Override
     public List<Seckill> getSeckillList() {
         return seckillDao.queryAll(0, 4);
     }
 
+    @Override
     public Seckill getById(long seckillId) {
         return seckillDao.queryById(seckillId);
     }
 
+    @Override
     public Exposer exportSeckillUrl(long seckillId) {
         Seckill seckill = this.getById(seckillId);
         if (seckill == null) {
@@ -75,6 +78,7 @@ public class SeckillServiceImpl implements SeckillService {
      * 2：保证事务方法的执行时间尽可能短，不要穿插其它网络操作，RPC/HTTP操作或者剥离到事务方法外部
      * 3：不是所有的方法都需要事务，如只有一条修改，只读操作不需要事务.
      */
+    @Override
     @Transactional
     public SeckillExecution executeSeckill(long seckillId, long userPhone, String md5) throws SeckillException, RepeatKillException, SeckillCloseException {
         if (md5 == null || !md5.equals(getMD5(seckillId))) {
