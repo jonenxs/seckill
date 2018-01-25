@@ -4,6 +4,7 @@ import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.dto.SeckillResult;
 import org.seckill.entity.Seckill;
+import org.seckill.enums.SeckillStateEnum;
 import org.seckill.exception.RepeatKillException;
 import org.seckill.exception.SeckillCloseException;
 import org.seckill.service.SeckillService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -82,13 +84,21 @@ public class SeckillController {
             SeckillExecution execution = seckillService.executeSeckill(seckillId, phone, md5);
             return new SeckillResult<SeckillExecution>(true, execution);
         } catch (RepeatKillException e){
-
-        }catch (SeckillCloseException e){
-
-        }catch (Exception e) {
+            SeckillExecution execution = new SeckillExecution(seckillId, SeckillStateEnum.REPEAT_KILL);
+            return new SeckillResult<>(false, execution);
+        } catch (SeckillCloseException e){
+            SeckillExecution execution = new SeckillExecution(seckillId, SeckillStateEnum.END);
+            return new SeckillResult<>(false, execution);
+        } catch (Exception e) {
             logger.error(e.getMessage(),e);
+            SeckillExecution execution = new SeckillExecution(seckillId, SeckillStateEnum.INNER_ERROR);
+            return new SeckillResult<>(false, execution);
         }
+    }
 
-        return result;
+    @RequestMapping(value = "time/now",method = RequestMethod.GET)
+    public SeckillResult<Long> time(){
+        Date now = new Date();
+        return new SeckillResult(true, now.getTime());
     }
 }
